@@ -11,7 +11,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
-import jp.wasabeef.glide.transformations.RoundedCornersTransformation
 import mcs.datamicron.samplerecyclerview.R
 import mcs.datamicron.samplerecyclerview.data.models.ListItem
 import java.util.*
@@ -39,7 +38,6 @@ class MainListAdapter(
         cal.timeInMillis = item.time
         val date: String = DateFormat.format("dd-MM-yyyy", cal).toString()
         holder.time.text = date
-        Log.e("##adapter", item.avatar)
         Glide.with(context).load(item.avatar).transform(CircleCrop())
             .into(holder.avatar)
     }
