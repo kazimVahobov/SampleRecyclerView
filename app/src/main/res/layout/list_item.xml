@@ -56,6 +56,7 @@
     </RelativeLayout>
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/avatarCardView"
         android:layout_width="40dp"
         android:layout_height="40dp"
         app:cardCornerRadius="20dp"
