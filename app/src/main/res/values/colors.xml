@@ -3,8 +3,10 @@
     <color name="colorPrimary">#FFFFFF</color>
     <color name="colorPrimaryDark">#FFFFFF</color>
     <color name="colorAccent">#D81B60</color>
-    
+    <color name="mainBGColor">#BBCAF1</color>
+
     <color name="cardBgColor">#f6f6f6</color>
     <color name="titleTextColor">#258bd6</color>
     <color name="contentTextColor">#999da4</color>
+    <color name="avatarBgColor">#B0B5BC</color>
 </resources>
