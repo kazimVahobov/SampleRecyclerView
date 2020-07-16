@@ -2,16 +2,12 @@ package mcs.datamicron.samplerecyclerview.ui.main_activity
 
 import android.content.Context
 import android.text.format.DateFormat
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
-import android.widget.ImageView
-import android.widget.RelativeLayout
-import android.widget.TextView
+import android.widget.*
 import androidx.cardview.widget.CardView
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
@@ -23,12 +19,14 @@ class MainListAdapter(
     private val context: Context,
     private val list: MutableList<ListItem>, _isDark: Boolean
 ) :
-    RecyclerView.Adapter<MainListAdapter.ViewHolder>() {
+    RecyclerView.Adapter<MainListAdapter.ViewHolder>(), Filterable {
 
     private var isDark: Boolean = false
+    private var filteredList: MutableList<ListItem> = arrayListOf()
 
     init {
         setDark(_isDark)
+        filteredList = list
     }
 
     fun setDark(state: Boolean) {
@@ -41,11 +39,11 @@ class MainListAdapter(
     }
 
     override fun getItemCount(): Int {
-        return list.size
+        return filteredList.size
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = list[position]
+        val item = filteredList[position]
         holder.relativeLayout.animation = AnimationUtils.loadAnimation(context, R.anim.fade_scale)
 
         holder.title.text = item.title
@@ -69,5 +67,35 @@ class MainListAdapter(
         var avatar: ImageView = itemView.findViewById(R.id.avatar)
         var avatarCardView: CardView = itemView.findViewById(R.id.avatarCardView)
         var relativeLayout: RelativeLayout = itemView.findViewById(R.id.relativeLayout)
+    }
+
+    override fun getFilter(): Filter {
+        return object : Filter() {
+            override fun performFiltering(constraint: CharSequence): FilterResults? {
+                val key = constraint.toString()
+                filteredList = if (key.isEmpty()) list
+                else {
+                    val filtered: MutableList<ListItem> = arrayListOf()
+                    list.forEach {
+                        if (it.title.toLowerCase().contains(key.toLowerCase())) {
+                            filtered.add(it)
+                        }
+                    }
+                    filtered
+                }
+                val result = FilterResults()
+                result.values = filteredList
+                return result
+            }
+
+            override fun publishResults(
+                constraint: CharSequence?,
+                results: FilterResults
+            ) {
+                if (results.values is MutableList<*>)
+                filteredList = results.values as MutableList<ListItem>
+                notifyDataSetChanged()
+            }
+        }
     }
 }

@@ -3,6 +3,8 @@ package mcs.datamicron.samplerecyclerview
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -53,11 +55,24 @@ class MainActivity : AppCompatActivity() {
             adapter.notifyDataSetChanged()
             saveDarkMode(isDark)
         }
+
+        searchET.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                adapter.filter.filter(s)
+            }
+        })
     }
 
     private fun setDarkTheme(isDark: Boolean) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             rootLayout.setBackgroundColor(getColor(if (isDark) R.color.mainBGNightColor else R.color.mainBGColor))
+            searchET.setBackgroundResource(if (isDark) R.drawable.search_input_bg_night else R.drawable.search_input_bg)
             window.statusBarColor =
                 getColor(if (isDark) R.color.mainBGNightColor else R.color.mainBGColor)
         }
