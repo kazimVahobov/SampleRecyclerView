@@ -3,7 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/mainBGColor"
     android:layout_marginTop="8dp">
 
     <RelativeLayout
@@ -59,9 +58,9 @@
         android:id="@+id/avatarCardView"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        app:cardCornerRadius="20dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
+        app:cardCornerRadius="20dp"
         app:layout_constraintEnd_toStartOf="@+id/relativeLayout"
         app:layout_constraintStart_toStartOf="@+id/relativeLayout"
         app:layout_constraintTop_toTopOf="@+id/relativeLayout">
@@ -70,8 +69,8 @@
             android:id="@+id/avatar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:srcCompat="@mipmap/ic_launcher"
-            android:background="@color/avatarBgColor"/>
+            android:background="@color/avatarBgColor"
+            app:srcCompat="@mipmap/ic_launcher" />
 
     </androidx.cardview.widget.CardView>
 

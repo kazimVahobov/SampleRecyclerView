@@ -2,6 +2,7 @@ package mcs.datamicron.samplerecyclerview.ui.main_activity
 
 import android.content.Context
 import android.text.format.DateFormat
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +11,7 @@ import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.cardview.widget.CardView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
@@ -19,9 +21,19 @@ import java.util.*
 
 class MainListAdapter(
     private val context: Context,
-    private val list: MutableList<ListItem>
+    private val list: MutableList<ListItem>, _isDark: Boolean
 ) :
     RecyclerView.Adapter<MainListAdapter.ViewHolder>() {
+
+    private var isDark: Boolean = false
+
+    init {
+        setDark(_isDark)
+    }
+
+    fun setDark(state: Boolean) {
+        isDark = state
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.list_item, parent, false)
@@ -46,6 +58,8 @@ class MainListAdapter(
             AnimationUtils.loadAnimation(context, R.anim.fade_transition)
         Glide.with(context).load(item.avatar).transform(CircleCrop())
             .into(holder.avatar)
+
+        holder.relativeLayout.setBackgroundResource(if (isDark) R.drawable.card_bg_night else R.drawable.card_bg)
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
